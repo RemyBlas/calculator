@@ -10,23 +10,46 @@ body {
     display: flex;
     flex-direction: column;
     align-self: center;
-    height: 550px;
+    height: 570px;
     width: 375px;
     background-color: gray;
     border: 2px solid white;
     border-radius: 10px;
 }
 
-.display {
+.displayContainer {
     display: flex;
+    flex: 0;
+    flex-direction: column;
     justify-content: flex-end;
+    align-items: flex-end;
     margin: 20px 20px 0px;
-    padding: 20px;
     background-color: #aaf8de;
-    font-size: 30px;
-    font-family: sans-serif;
     border-radius: 10px;
     border: 2px solid white;
+    height: 100px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.display,
+.subdisplay {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 5px;
+    font-family: sans-serif;
+}
+
+.display {
+    height: 50px;
+    font-size: 40px;
+}
+
+.subdisplay {
+    height: 22px;
+    font-size: 12px;
 }
 
 .buttonsContainer {
@@ -52,17 +75,19 @@ body {
     border: 2px solid white;
 }
 
-.button.operator {
+.operator,
+.equals {
     background-color: #eba1a1;
 }
 
-.button#zero {
+.button.zero {
     width: 165px;
 }
 
 #clear,
-#delete {
+#backspace {
     width: 122.5px;
+    background-color: #adb5e6;
 }
 
 .button:hover {
