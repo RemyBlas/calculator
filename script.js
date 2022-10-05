@@ -8,6 +8,7 @@ display.textContent = displayValue
 
 const subdisplay = document.querySelector(".subdisplay");
 
+
 //event listeners
 const buttons = document.querySelectorAll(".number");
 buttons.forEach(button => {
@@ -35,7 +36,42 @@ operators.forEach(button => {
 const equals = document.getElementById("=");
 equals.addEventListener("click", function() { evaluate() });
 
+const key = document.addEventListener("keypress", (event) => {
+    keyboardInput(event);
+})
+
+const clearingKeys = document.addEventListener("keydown", (event) => {
+    let k = String(event.key);
+
+    if (k === "Backspace") {
+        deleteOneChar();
+    } else if (k === "Escape") {
+        clearDisplay();
+    } else {
+        return;
+    }
+})
+
 //funciones
+function keyboardInput(event) {
+    const digits = [];
+    for (let i=0; i<=9; i++) {
+        digits.push(String(i));
+    }
+    const operators = ["+", "-", "*", "/"]
+    let k = String(event.key);
+
+    if (digits.includes(k)) {
+        updateDisplay(k);
+    } else if (operators.includes(k)) {
+        prepateOperation(k);
+    } else if (k === "=" || k === "Enter") {
+        evaluate();
+    } else {
+        return;
+    }
+};
+
 function updateDisplay(n) {
     if (displayValue === "0" || displayValue === firstValue) {
         displayValue = n;
@@ -61,6 +97,10 @@ function prepateOperation(op) {
 }
 
 function evaluate() {
+    const buttons = document.querySelectorAll(".operator")
+    buttons.forEach(button => {
+        button.classList.remove("selectedOperator");
+    })
     if (!currentOperation) { return }
     else if (currentOperation === "÷" && displayValue === "0") {
         display.textContent = "0";
@@ -83,9 +123,15 @@ function clearDisplay() {
 function deleteOneChar() {
     display.textContent = display.textContent.slice(0, -1);
     displayValue = display.textContent;
+    if (display.textContent === "") {
+        displayValue = "0";
+        display.textContent = "0";
+    }
 }
 
-//funciones de cada operación
+
+
+//funciones de operaciones
 const add = function(a,b) {
     return a + b;
 };
@@ -112,7 +158,7 @@ function operate(a, op, b) {
             return substract(a,b);
         case "x":
             return multiply(a,b);
-        case "÷":
+        case "/":
             if (b === 0) return null;
             else return divide(a,b);
         default:
